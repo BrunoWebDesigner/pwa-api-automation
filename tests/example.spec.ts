@@ -1,18 +1,20 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test('Get Test Tags', async ({ request }) => {
+  const tagsResponse = await request.get('https://conduit-api.bondaracademy.com/api/tags')
+  const tagsResponseJSON = await tagsResponse.json();
+  
+  expect(tagsResponse.status()).toBe(200);
+  expect(tagsResponseJSON.tags[0]).toEqual('Test')
+  expect(tagsResponseJSON.tags.length).toBeLessThanOrEqual(10)
+  console.log(tagsResponseJSON)
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+test('Get All Articles', async ({ request }) => {
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles')
+  const articlesResponseJSON = await articlesResponse.json();
+  
+  expect(articlesResponse.status()).toBe(200);
+  expect(articlesResponseJSON.articles.length).toBeGreaterThan(0);
+  console.log(articlesResponseJSON)
 });
