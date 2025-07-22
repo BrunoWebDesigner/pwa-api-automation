@@ -23,8 +23,8 @@ test('Get All Articles', async ({ request }) => {
   console.log(articlesResponseJSON)
 });
 
-// How to create a post request with authentication
-test('Create Article', async ({ request }) => {
+// How to create a post request test with authentication
+test('Create and Delete Article', async ({ request }) => {
   const tokenResponse = await request.post('https://conduit-api.bondaracademy.com/api/users/login', {
     data: {"user":{"email":"brunowebdeveloper33@gmail.com","password":"bondar27*"}}
   });
@@ -48,6 +48,7 @@ test('Create Article', async ({ request }) => {
   console.log(newArticleResponseJSON);
   expect(newArticleResponse.status()).toBe(201);
   expect(newArticleResponseJSON.article.title).toEqual('Test 02');
+  const slugId = newArticleResponseJSON.article.slug;
 
   // Verify the article was created
   const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles', {
@@ -58,4 +59,13 @@ test('Create Article', async ({ request }) => {
   const articlesResponseJSON = await articlesResponse.json();
   expect(articlesResponse.status()).toBe(200);
   expect(articlesResponseJSON.articles[0].title).toEqual('Test 02');
-})
+
+  // Delete the article
+  const deleteArticleResponse = await request.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugId}`, {
+    headers: {
+      'Authorization': `Token ${authToken}`
+    }
+  });
+  expect(deleteArticleResponse.status()).toBe(204);
+});
+
