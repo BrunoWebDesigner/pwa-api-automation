@@ -30,5 +30,32 @@ test('Create Article', async ({ request }) => {
   });
   const tokenResponseJSON = await tokenResponse.json();
   const authToken = tokenResponseJSON.user.token;
-  console.log(authToken);
-});
+
+  const newArticleResponse = await request.post('https://conduit-api.bondaracademy.com/api/articles', {
+    data: {
+      "article": {
+          "title": "Test 02",
+          "description": "Test Description 2",
+          "body": "Test body",
+          "tagList": []
+      }
+    },
+    headers: {
+      'Authorization': `Token ${authToken}`
+    }
+  })
+  const newArticleResponseJSON = await newArticleResponse.json();
+  console.log(newArticleResponseJSON);
+  expect(newArticleResponse.status()).toBe(201);
+  expect(newArticleResponseJSON.article.title).toEqual('Test 02');
+
+  // Verify the article was created
+  const articlesResponse = await request.get('https://conduit-api.bondaracademy.com/api/articles', {
+    headers: {
+      'Authorization': `Token ${authToken}`
+    }
+  })
+  const articlesResponseJSON = await articlesResponse.json();
+  expect(articlesResponse.status()).toBe(200);
+  expect(articlesResponseJSON.articles[0].title).toEqual('Test 02');
+})
