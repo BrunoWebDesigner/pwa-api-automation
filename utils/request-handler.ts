@@ -54,6 +54,42 @@ export class RequestHandler {
         return responseJSON;
     }
 
+    // POST Request
+    async postRequest(statusCode: number){
+        const url = this.getUrl();
+        const response = await this.request.post(url, {
+            headers: this.apiHeaders,
+            data: this.apiBody,
+        });
+        //Status Code Simplified
+        expect(response.status()).toBe(statusCode);
+        const responseJSON = await response.json();
+        return responseJSON;
+    }
+
+    // PUT Request
+    async putRequest(statusCode: number){
+        const url = this.getUrl();
+        const response = await this.request.put(url, {
+            headers: this.apiHeaders,
+            data: this.apiBody,
+        });
+        //Status Code Simplified
+        expect(response.status()).toBe(statusCode);
+        const responseJSON = await response.json();
+        return responseJSON;
+    }
+
+    // DELETE Request
+    async deleteRequest(statusCode: number){
+        const url = this.getUrl();
+        const response = await this.request.delete(url, {
+            headers: this.apiHeaders,
+        });
+        //Status Code Simplified
+        expect(response.status()).toBe(statusCode);
+    }
+
     private getUrl() {
         // Use the URL in the test or the Default Base URL if nothing is set
         const url = new URL(`${this.baseUrl ?? this.defaultBaseUrl}${this.apiPath}`);
