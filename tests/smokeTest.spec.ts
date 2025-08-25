@@ -19,7 +19,7 @@ test('Get Articles', async ({ api }) => {
         .params({limit:10, offset:0})
         .getRequest(200)
     expect(response.articles.length).toBeGreaterThan(0);
-    expect(response.articles.length).toBeLessThanOrEqual(10);
+    expect(response.articles.length).shouldEqual(10);
 })
 
 test('Get Test Tags', async ({ api }) => {
