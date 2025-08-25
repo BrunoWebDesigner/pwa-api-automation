@@ -1,7 +1,7 @@
 import { test } from '../utils/fixtures';
 import { expect } from '@playwright/test';
-import { APILogger } from '../utils/logger.ts';
 
+// Pre-Request - It will executed before each test
 let authToken: string
 
 test.beforeAll('Get Token', async ({ api }) => {
@@ -10,24 +10,6 @@ test.beforeAll('Get Token', async ({ api }) => {
         .body({"user":{"email":"brunowebdeveloper33@gmail.com","password":"bondar27*"}})
         .postRequest(200);
     authToken = 'Token ' + tokenResponse.user.token;
-});
-
-test('Logger', () => {
-    // First Logger
-    const logger = new APILogger();
-    logger.logRequest('POST', 'https://test.com/api', {Authorization: 'token'}, {foo: 'bar'});
-    logger.logResponse(200, {foo: 'bar'});
-
-    const logs = logger.getRecentLogs();
-    console.log(logs);
-
-    // Second Logger
-    const logger2 = new APILogger();
-    logger2.logRequest('GET', 'https://test.com/api', {Authorization: 'token'}, {foo: 'bar'});
-    logger2.logResponse(200, {foo: 'bar'});
-
-    const logs2 = logger2.getRecentLogs();
-    console.log(logs2);
 });
 
 test('Get Articles', async ({ api }) => {
