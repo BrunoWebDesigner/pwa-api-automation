@@ -13,6 +13,22 @@ test.beforeAll('Get Token', async ({ api }) => {
     authToken = 'Token ' + tokenResponse.user.token;
 });
 
+test('Get Articles and Tags', async ({ api }) => {
+
+    const response = await api
+        .path('/articles')
+        .params({limit:10, offset:0})
+        .getRequest(200)
+    expect(response.articles.length).toBeGreaterThan(0);
+    expect(response.articles.length).toEqual(10);
+
+    const response2 = await api
+        .path('/tags')
+        .getRequest(200)
+    expect(response2.tags[0]).toEqual('Test')
+    expect(response2.tags.length).toBeLessThanOrEqual(10)
+})
+
 test('Get Articles', async ({ api }) => {
 
     const response = await api
