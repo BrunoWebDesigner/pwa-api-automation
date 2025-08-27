@@ -1,5 +1,5 @@
 import { test } from '../utils/fixtures';
-import { expect } from '@playwright/test';
+import { expect } from '../utils/custom-expect';
 
 // Pre-Request - It will executed before each test
 let authToken: string
@@ -19,7 +19,7 @@ test('Get Articles', async ({ api }) => {
         .params({limit:10, offset:0})
         .getRequest(200)
     expect(response.articles.length).toBeGreaterThan(0);
-    expect(response.articles.length).shouldEqual(10);
+    expect(response.articles.length).toEqual(10);
 })
 
 test('Get Test Tags', async ({ api }) => {
