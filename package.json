@@ -9,7 +9,10 @@
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
-    "test:failed": "playwright test --last-failed"
+    "test:failed": "playwright test --last-failed",
+    "test:qa": "cross-env TEST_ENV=qa npx playwright test tests/smokeTest.spec.ts",
+    "test:prod": "cross-env TEST_ENV=prod npx playwright test tests/smokeTest.spec.ts",
+    "test:dev": "cross-env TEST_ENV=dev npx playwright test tests/smokeTest.spec.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +20,7 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.54.1",
-    "@types/node": "^24.0.15"
+    "@types/node": "^24.0.15",
+    "cross-env": "^7.0.3"
   }
 }

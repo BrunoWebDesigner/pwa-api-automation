@@ -1,5 +1,6 @@
 import { test } from '../utils/fixtures';
 import { expect } from '../utils/custom-expect';
+import { config } from '../utils/api-test-config';
 
 // Pre-Request - It will executed before each test
 let authToken: string
@@ -7,7 +8,7 @@ let authToken: string
 test.beforeAll('Get Token', async ({ api }) => {
     const tokenResponse = await api
         .path('/users/login')
-        .body({"user":{"email":"brunowebdeveloper33@gmail.com","password":"bondar27*"}})
+        .body({"user":{"email":config.userEmail,"password":config.userPassword}})
         .postRequest(200);
     authToken = 'Token ' + tokenResponse.user.token;
 });
