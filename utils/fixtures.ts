@@ -2,7 +2,7 @@ import { test as base } from '@playwright/test';
 import { RequestHandler } from '../utils/request-handler';   
 import { APILogger } from '../utils/logger.ts';
 import { setCustomExpectLogger } from './custom-expect.ts';
-import { config } from '../utils/api-test-config.ts';
+import { config } from '../api-test-config.ts';
 
 export type TestOptions = {
     api: RequestHandler;

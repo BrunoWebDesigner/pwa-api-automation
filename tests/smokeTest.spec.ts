@@ -1,16 +1,17 @@
 import { test } from '../utils/fixtures';
 import { expect } from '../utils/custom-expect';
-import { config } from '../utils/api-test-config';
+import { config } from '../api-test-config';
+import { createToken } from '../helpers/createToken';
 
 // Pre-Request - It will executed before each test
 let authToken: string
 
 test.beforeAll('Get Token', async ({ api }) => {
-    const tokenResponse = await api
-        .path('/users/login')
-        .body({"user":{"email":config.userEmail,"password":config.userPassword}})
-        .postRequest(200);
-    authToken = 'Token ' + tokenResponse.user.token;
+    // const tokenResponse = await api
+    //     .path('/users/login')
+    //     .body({"user":{"email":config.userEmail,"password":config.userPassword}})
+    //     .postRequest(200);
+    authToken = await createToken(config.userEmail, config.userPassword);
 });
 
 test('Get Articles and Tags', async ({ api }) => {
